@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw | New Dawn Industries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-green-400 font-mono flex items-center justify-center h-screen p-4">
+    <div class="w-full max-w-4xl bg-gray-900 border border-gray-700 rounded-lg shadow-2xl p-6 flex flex-col h-[80vh]">
+        
+        <!-- Header & Monetization -->
+        <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-4 flex-wrap gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white tracking-widest">OpenClaw // NDI</h1>
+                <p class="text-xs text-gray-500 mt-1">Autonomous Agent Routing: OpenRouter -> Ollama Local Edge</p>
+            </div>
+            <!-- Generate a Stripe Payment Link in your dashboard and drop it here -->
+            <a href="https://buy.stripe.com/YOUR_PAYMENT_LINK" target="_blank" class="bg-green-600 hover:bg-green-500 text-black px-4 py-2 rounded text-sm font-bold transition shadow-[0_0_10px_rgba(22,163,74,0.5)]">
+                Deploy An Agent For Your Business ($499)
+            </a>
+        </div>
+
+        <!-- Terminal Output -->
+        <div id="chat-window" class="flex-1 overflow-y-auto mb-4 p-4 bg-black rounded border border-gray-800 space-y-2">
+            <p class="text-gray-500">[System] Initializing OpenClaw environment on newdawnindustries26.com...</p>
+            <p class="text-gray-500">[System] Establishing secure connection to backend...</p>
+            <p class="text-green-400">&gt; OpenClaw is online and ready for input.</p>
+        </div>
+
+        <!-- Input Area -->
+        <div class="flex gap-2">
+            <input type="text" id="user-input" class="flex-1 bg-black border border-gray-700 rounded p-3 text-white focus:outline-none focus:border-green-500 transition" placeholder="Enter task or command...">
+            <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded transition border border-gray-700 hover:border-gray-500">
+                Execute
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        // Core interaction logic to link to your OpenClaw backend API
+        const input = document.getElementById('user-input');
+        const button = document.querySelector('button');
+        const chat = document.getElementById('chat-window');
+
+        const appendMessage = (text, type = 'user') => {
+            const p = document.createElement('p');
+            p.className = type === 'user' ? 'text-white' : 'text-green-400';
+            p.textContent = type === 'user' ? `> ${text}` : text;
+            chat.appendChild(p);
+            chat.scrollTop = chat.scrollHeight;
+        };
+
+        const handleSend = () => {
+            const val = input.value.trim();
+            if (!val) return;
+            appendMessage(val, 'user');
+            input.value = '';
+            
+            // NOTE: Replace this with your actual OpenClaw API endpoint call
+            // Ensure CORS is enabled on the backend for newdawnindustries26.com
+            setTimeout(() => {
+                appendMessage(`[Agent] Acknowledged. Processing task...`, 'agent');
+            }, 500);
+        };
+
+        button.addEventListener('click', handleSend);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+    </script>
+</body>
+</html>
